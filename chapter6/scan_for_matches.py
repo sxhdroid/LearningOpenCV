@@ -64,7 +64,7 @@ for d in descriptors:
     if len(good) > MIN_MATCH_COUNT:
         print('%s is a match!(%d)' % (d, len(good)))
     else:
-        print('%s is not a match!' % (d,))
+        print('%s is not a match!(%d)' % (d, len(good)))
     potential_culprits[d] = len(good)
 
 max_match = None

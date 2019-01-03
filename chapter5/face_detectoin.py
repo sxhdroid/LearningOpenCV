@@ -28,6 +28,7 @@ def detect():
     # 加载人脸检测过滤器
     face_cascade = cv2.CascadeClassifier('./cascades/haarcascade_frontalface_default.xml')
     eye_cascade = cv2.CascadeClassifier('./cascades/haarcascade_eye.xml')  # 眼睛检测过滤器
+    mouth_cascade = cv2.CascadeClassifier('./cascades/haarcascade_mcs_mouth.xml')  # 嘴巴检测过滤器
     camera = cv2.VideoCapture(0)  # 打开摄像头
     while True:
         ret, frame = camera.read()
@@ -36,9 +37,10 @@ def detect():
         for (x, y, w, h) in faces:
             img = cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
             roi_gray = gray[y:y+h, x:x+w]
-            eyes = eye_cascade.detectMultiScale(roi_gray, 1.03, 5, 0, (50, 50))
+            eyes = eye_cascade.detectMultiScale(roi_gray, 1.2, 7, 0, (30, 30))
             for (ex, ey, ew, eh) in eyes:
-                cv2.rectangle(frame, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 2)
+                cv2.rectangle(frame, (ex, ey), (x + ex + ew, y + ey + eh), (0, 255, 0), 2)
+
         cv2.imshow('!!!', frame)
         if cv2.waitKey(1) & 0xff == ord('q'):
             break
